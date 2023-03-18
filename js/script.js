@@ -1,3 +1,14 @@
+let display = '';
+const results = document.querySelector(".results");
+const btns = document.querySelectorAll(".btn");
+btns.forEach((btn) => {
+	btn.addEventListener("click", () => {
+	console.log(btn.getAttribute("data-value"));
+	display += btn.getAttribute("data-value");
+	results.textContent = display;
+	});
+});
+
 function add(a, b){
 	return a + b;
 }
@@ -17,10 +28,3 @@ function divide(a, b){
 function operate(func, a, b){
 	return func(a, b);
 }
-
-console.log(`4 + 3 = ${add(4, 3)}`);
-console.log(`8 - 12 = ${subtract(8, 12)}`);
-console.log(`6 * 9 = ${multiply(6, 9)}`);
-console.log(`15 / 3 = ${divide(15, 3)}`);
-
-console.log(`6 + 6 = ${operate(add, 6, 6)}`);
