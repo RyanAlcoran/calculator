@@ -9,6 +9,7 @@ const results = document.querySelector('.results');
 const btns = document.querySelectorAll('.btn');
 btns.forEach((btn) => {
 	btn.addEventListener('click', () => {
+		let value = btn.textcontent;
 		//console.log(btn.getAttribute('data-type'));
 		switch (btn.getAttribute('data-type')) {
 		case 'clear':
@@ -19,16 +20,27 @@ btns.forEach((btn) => {
 			break;
 		case 'num':
 			//if (input.length < 9) {
-			input += btn.textContent;
+			input += value;
 			results.textContent = input;
 			//}
 			break;
 		case 'operator':
+			if (operator.length() > 0 && secondOperand.length() > 0 && firstOperand.length() > 0) {
+				let result = operate(operator, firstOperand, secondOperand);
+				results.textContent = result;
+				firstOperand = result;
+				secondOperand = '';
+				operator = value;
+				input = '';
+			}
 			firstOperand = input;
-			input += btn.textContent;
-			results.textContent = input
+			operator = value;
+			input = '';
 			break;
 		case 'operate':
+			let result = operate(operator, firstOperand, secondOperand);
+			results.textContent = result;
+			input = '';
 			break;
 		default:
 			console.log("does not match");
