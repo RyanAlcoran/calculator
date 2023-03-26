@@ -23,6 +23,10 @@ btns.forEach((btn) => {
 				input = '';
 			}
 			input += value;
+			if (input.length > 9) {
+				input = +input;
+				input = input.toExponential(3);
+			}
 			results.textContent = input;
 			break;
 		case 'operator':
@@ -97,6 +101,10 @@ function round(num) {
 function calculate() {
 	secondOperand = input;
 	let result = round(operate(operator, +firstOperand, +secondOperand)).toString();
+	if (result.length > 9) {
+		result = +result;
+		result = result.toExponential(3);
+	}
 	results.textContent = result;
 	firstOperand = result;
 	secondOperand = '';
