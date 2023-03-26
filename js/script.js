@@ -31,14 +31,18 @@ btns.forEach((btn) => {
 				operator = btn.id;
 				input = '';
 			}
-			firstOperand = input;
-			operator = btn.id;
-			input = '';
+			else {
+				firstOperand = input;
+				operator = btn.id;
+				input = '';
+			}
 			break;
 		case 'operate':
-			calculate();
-			operator = '';
-			input = results.textContent;
+			if(firstOperand.length > 0 && operator.length > 0) {
+				calculate();
+				operator = '';
+				input = results.textContent;	
+			}
 			break;
 		default:
 			console.log("does not match");
