@@ -1,5 +1,4 @@
 let input = '';
-let display = ''
 let firstOperand = '';
 let secondOperand = '';
 let operator = '';
@@ -9,7 +8,7 @@ const results = document.querySelector('.results');
 const btns = document.querySelectorAll('.btn');
 btns.forEach((btn) => {
 	btn.addEventListener('click', () => {
-		let value = btn.textcontent;
+		let value = btn.textContent;
 		//console.log(btn.getAttribute('data-type'));
 		switch (btn.getAttribute('data-type')) {
 		case 'clear':
@@ -19,28 +18,26 @@ btns.forEach((btn) => {
 			backspace(input);
 			break;
 		case 'num':
-			//if (input.length < 9) {
+			if (firstOperand.length > 0 && operator.length === 0) {
+				input = '';
+			}
 			input += value;
 			results.textContent = input;
-			//}
 			break;
 		case 'operator':
-			if (operator.length() > 0 && secondOperand.length() > 0 && firstOperand.length() > 0) {
-				let result = operate(operator, firstOperand, secondOperand);
-				results.textContent = result;
-				firstOperand = result;
-				secondOperand = '';
-				operator = value;
+			if (operator.length > 0) {
+				calculate();
+				operator = btn.id;
 				input = '';
 			}
 			firstOperand = input;
-			operator = value;
+			operator = btn.id;
 			input = '';
 			break;
 		case 'operate':
-			let result = operate(operator, firstOperand, secondOperand);
-			results.textContent = result;
-			input = '';
+			calculate();
+			operator = '';
+			input = results.textContent;
 			break;
 		default:
 			console.log("does not match");
@@ -48,33 +45,15 @@ btns.forEach((btn) => {
 		
 	});
 });
-// Buttons
-// const btnsNum = document.querySelectorAll('.btn.num');
-// btnsNum.forEach((btn) => {
-// 	btn.addEventListener('click', () => {
-// 		if (input.length < 9) {
-// 			input += btn.textContent;
-// 			results.textContent = input;
-// 		}
-// 	});
-// });
-
-// const btnClear = document.querySelector('[data-value="clear"]');
-// btnClear.addEventListener('click', clear);
-
-// const
-
-// const btnsOp = document.querySelectorAll('.btn.op');
-// btnsOp.forEach((btn) => {
-// 	btn.addEventListener('click', () => {
-// 		operator = btn.getAttribute('data-value');
-// 		input += ` ${btn.textContent} `;
-// 	});
-// });
 
 function backspace(string) {
 	input = string.slice(0, -1);
-	results.textContent = input;
+	if (input.length <= 0) {
+		clear();
+	} 
+	else {
+		results.textContent = input;
+	}
 }
 
 function clear() {
@@ -102,5 +81,18 @@ function divide(a, b){
 }
 
 function operate(func, a, b){
-	return func(a, b);
+	return window[func](a, b);
+}
+
+// Round to the nearsest one thousandths
+function round(num) {
+	return Math.round((num + Number.EPSILON) * 1000) / 1000;
+}
+
+function calculate() {
+	secondOperand = input;
+	let result = round(operate(operator, +firstOperand, +secondOperand)).toString();
+	results.textContent = result;
+	firstOperand = result;
+	secondOperand = '';
 }
