@@ -19,6 +19,7 @@ btns.forEach((btn) => {
 			break;
 		case 'num':
 			if (firstOperand.length > 0 && operator.length === 0) {
+				firstOperand = '';
 				input = '';
 			}
 			input += value;

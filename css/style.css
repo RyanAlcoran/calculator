@@ -39,10 +39,15 @@
 	line-height: 50px;
 	font-size: 30px;
 	justify-self: center;
+	transition: all .2s ease;
 }
 
 .btn:hover {
 	background-color: #fefff0;
+}
+
+.btn:active {
+	border-radius: 25px;
 }
 
 .op {
